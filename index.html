@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Vibras Positivas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #9D50BB;
+            --secondary: #F37335;
+            --bg-grad: linear-gradient(135deg, #9D50BB, #6E48AA);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; }
+
+        /* Contenedor de la Tarjeta */
+        #card-container {
+            width: 350px;
+            height: 500px;
+            background: var(--bg-grad);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-content h2 { font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px; }
+        .card-content p { font-size: 1.8rem; font-weight: bold; line-height: 1.4; }
+        .user-name { margin-top: 30px; font-style: italic; font-size: 1.1rem; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; width: 80%; }
+        
+        /* Marca de Agua */
+        .watermark { position: absolute; bottom: 15px; font-size: 0.7rem; opacity: 0.6; }
+
+        /* Controles */
+        .controls { margin-top: 30px; display: flex; flex-direction: column; gap: 15px; width: 350px; }
+        input { padding: 12px; border-radius: 10px; border: 1px solid #ddd; font-size: 1rem; }
+        
+        .color-selector { display: flex; gap: 10px; justify-content: center; }
+        .color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; cursor: pointer; }
+
+        button#download-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button#download-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body>
+
+    <h1>Eleva tu Energía ✨</h1>
+
+    <div id="card-container">
+        <div class="card-content">
+            <h2>TU MENSAJE DE HOY:</h2>
+            <p id="phrase">"Confía en el proceso, lo que buscas te está buscando."</p>
+            <div class="user-name" id="display-name">Para: Alguien Especial</div>
+        </div>
+        <div class="watermark">app desarrollada por vibras positivas (3117700431)</div>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="name-input" placeholder="Escribe tu nombre aquí..." maxlength="20">
+        
+        <div class="color-selector">
+            <div class="color-btn" style="background: linear-gradient(135deg, #9D50BB, #6E48AA);" onclick="changeColor('linear-gradient(135deg, #9D50BB, #6E48AA)')"></div>
+            <div class="color-btn" style="background: linear-gradient(135deg, #FDC830, #F37335);" onclick="changeColor('linear-gradient(135deg, #FDC830, #F37335)')"></div>
+            <div class="color-btn" style="background: linear-gradient(135deg, #96E6A1, #D4FC79);" onclick="changeColor('linear-gradient(135deg, #96E6A1, #D4FC79)')"></div>
+        </div>
+
+        <button id="download-btn">Descargar mi Tarjeta Digital 📥</button>
+    </div>
+
+    <script>
+        // Actualización en tiempo real del nombre
+        const nameInput = document.getElementById('name-input');
+        const displayName = document.getElementById('display-name');
+
+        nameInput.addEventListener('input', (e) => {
+            displayName.innerText = e.target.value ? `Para: ${e.target.value}` : "Para: Alguien Especial";
+        });
+
+        // Cambiar color de fondo
+        function changeColor(gradient) {
+            document.getElementById('card-container').style.background = gradient;
+        }
+
+        // Lógica de descarga de la imagen
+        document.getElementById('download-btn').addEventListener('click', () => {
+            const container = document.getElementById('card-container');
+            
+            html2canvas(container, {
+                scale: 2, // Mejora la calidad de la imagen
+                backgroundColor: null
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `VibrasPositivas-${nameInput.value || 'Tarjeta'}.png`;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        });
+    </script>
+
+</body>
+</html>
