@@ -3,43 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Gracias por tu compra! ✨</title>
+    <title>Tu Mazo Premium - Vibras Positivas ✨</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #000;
-            color: white;
-            text-align: center;
+        body { font-family: 'Segoe UI', sans-serif; background: #000; color: white; text-align: center; padding: 20px; }
+        h1 { color: #F37335; }
+        p { opacity: 0.8; margin-bottom: 30px; }
+        
+        /* Contenedor de la Galería */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilo de cada tarjeta generada */
+        .card-item {
+            width: 300px;
+            height: 450px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0; padding: 20px;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin: auto;
         }
-        h1 { color: #F37335; font-size: 2.5rem; }
-        p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px; max-width: 500px; }
-        .download-btn {
-            background: #9D50BB;
-            color: white;
-            padding: 20px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(157, 80, 187, 0.4);
-            display: inline-block;
-        }
+        .card-item:hover { transform: scale(1.02); }
+        .card-item img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index: 1; }
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); z-index: 2; }
+        .card-text { position: relative; z-index: 3; font-weight: bold; font-size: 1.2rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
+        .watermark { position: absolute; bottom: 10px; z-index: 3; font-size: 0.6rem; opacity: 0.7; }
+
+        .btn-save { margin-top: 10px; background: #F37335; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>¡Gracias por tu compra! ✨</h1>
-    <p>He confirmado tu pago. Haz clic abajo para descargar tu mazo de 26 tarjetas de paisajes premium.</p>
-    
-    <a href="fotospaisajes.zip" class="download-btn" download>🛍️ Descargar mis 26 Tarjetas (ZIP)</a>
-    
-    <div style="margin-top: 50px; font-size: 0.8rem; opacity: 0.7;">
-        app desarrollada por vibras positivas (3117700431)
-    </div>
+
+    <h1>¡Tu Mazo de 26 Tarjetas está listo! ✨</h1>
+    <p>Toca cualquier tarjeta para descargarla con su mensaje de poder.</p>
+
+    <div class="gallery" id="premium-gallery">
+        </div>
+
+    <script>
+        // Lista de 26 frases poderosas (Automático)
+        const premiumPhrases = [
+            "El éxito es mi estado natural.", "Soy un imán para la abundancia.", "Mi energía abre puertas imposibles.",
+            "Hoy elijo ser mi mejor versión.", "Confío plenamente en mi camino.", "Atraigo paz y prosperidad.",
+            "Mi luz ilumina a quienes me rodean.", "Merezco todo lo bueno del universo.", "Soy creador de mi propia realidad.",
+            "Cada reto es una oportunidad de oro.", "Mi mente es una fuente de ideas brillantes.", "Vivo en gratitud infinita.",
+            "La abundancia fluye hacia mí sin esfuerzo.", "Hoy recibo milagros inesperados.", "Soy fuerte, valiente y capaz.",
+            "Mi futuro es brillante y seguro.", "Dejo ir lo que ya no me sirve.", "Soy un canal de bendiciones.",
+            "Atraigo personas que elevan mi alma.", "Mi paz interior es innegociable.", "Todo conspira a mi favor hoy.",
+            "Soy suficiente tal como soy.", "Mi potencial es ilimitado.", "Amo mi vida y todo lo que viene.",
+            "Soy prosperidad en movimiento.", "El universo me cuida y me guía."
+        ];
+
+        const gallery = document.getElementById('premium-gallery');
+
+        // Generar las 26 tarjetas automáticamente usando tus fotos de Unsplash (como ejemplo rápido)
+        // Pero para que use TUS fotos, GitHub debería tenerlas en una carpeta.
+        for (let i = 0; i < 26; i++) {
+            const card = document.createElement('div');
+            card.className = 'card-item';
+            card.id = `card-${i}`;
+            
+            // Usamos una imagen de fondo aleatoria para el ejemplo
+            const imgUrl = `https://picsum.photos/id/${i + 10}/400/600`;
+            
+            card.innerHTML = `
+                <img src="${imgUrl}" crossorigin="anonymous">
+                <div class="overlay"></div>
+                <div class="card-text">"${premiumPhrases[i]}"</div>
+                <div class="watermark">Vibras Positivas (3117700431)</div>
+                <button class="btn-save" onclick="downloadSingleCard('card-${i}')">Guardar</button>
+            `;
+            gallery.appendChild(card);
+        }
+
+        function downloadSingleCard(id) {
+            const element = document.getElementById(id);
+            const btn = element.querySelector('.btn-save');
+            btn.style.display = 'none'; // Ocultar botón en la foto
+
+            html2canvas(element, { useCORS: true, scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `VibraPremium-${id}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                btn.style.display = 'block'; // Mostrar botón de nuevo
+            });
+        }
+    </script>
 </body>
 </html>
