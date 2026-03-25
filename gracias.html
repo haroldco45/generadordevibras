@@ -3,134 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibras Positivas ✨ - Tu Mazo Premium</title>
+    <title>Tu Mazo Premium - Vibras Positivas ✨</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #000; color: white; text-align: center; margin: 0; padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        body { font-family: 'Segoe UI', sans-serif; background: #000; color: white; text-align: center; padding: 20px; }
         h1 { color: #F37335; margin-bottom: 10px; }
         p.subtitle { opacity: 0.8; margin-bottom: 30px; }
         
-        /* --- ESTILOS DE LA GALERÍA --- */
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; width: 100%; max-width: 800px; padding: 10px; box-sizing: border-box; }
-        
-        .card-thumbnail {
-            aspect-ratio: 2/3;
-            border-radius: 12px;
-            overflow: hidden;
+        /* Contenedor de la Galería */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Estilo de cada tarjeta Premium (image_0.png style) */
+        .card-item {
+            width: 280px;
+            height: 420px;
+            border-radius: 15px;
             position: relative;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            box-sizing: border-box;
+            transition: transform 0.3s;
+            margin: auto;
             background-size: cover;
             background-position: center;
         }
         
-        .card-thumbnail:hover { transform: scale(1.03); box-shadow: 0 8px 16px rgba(243, 115, 53, 0.3); }
-        .card-thumbnail::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.4); z-index: 1; }
-        
-        .thumb-phrase {
-            position: relative; z-index: 2;
-            color: white; font-weight: bold; font-size: 0.8rem;
-            padding: 10px; box-sizing: border-box; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
-        }
+        /* Efecto al pasar el mouse */
+        .card-item:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(243, 115, 53, 0.3); }
 
-        /* --- ESTILOS DEL MODAL DE EDICIÓN --- */
-        .modal {
-            display: none; /* Oculto por defecto */
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 100;
-            justify-content: center; align-items: center;
-            flex-direction: column;
-            padding: 20px; box-sizing: border-box;
-            backdrop-filter: blur(5px);
+        /* Capa oscura para contraste del texto (image_0.png style) */
+        .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); z-index: 1; }
+        
+        /* Texto de la Frase */
+        .card-text { 
+            position: relative; z-index: 2; 
+            font-weight: bold; font-size: 1.5rem; 
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8); 
+            line-height: 1.3;
         }
         
-        .modal.active { display: flex; } /* Clase para mostrarlo */
-        
-        .modal-content {
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
-            max-width: 350px; width: 100%;
-        }
+        /* Marca de Agua (image_0.png style) */
+        .watermark { position: absolute; bottom: 10px; z-index: 2; font-size: 0.6rem; opacity: 0.7; }
 
-        /* --- ESTILO DE LA TARJETA PREMIUM (Fiel a image_0.png) --- */
-        #premium-card-preview {
-            width: 100%;
-            aspect-ratio: 2/3;
-            border-radius: 20px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            align-items: center; padding: 40px 20px; text-align: center; color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative; overflow: hidden; box-sizing: border-box;
-            background-size: cover; background-position: center;
+        /* Botón de Descarga Individual */
+        .btn-save { 
+            margin-top: 20px; 
+            background: #F37335; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            position: relative; z-index: 3; 
+            transition: background 0.2s;
         }
-        
-        #premium-card-preview::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4); z-index: 1;
-        }
-        
-        .card-header { font-size: 1rem; font-weight: bold; opacity: 0.9; position: relative; z-index: 2; }
-        #premium-phrase { font-size: 1.8rem; font-weight: 800; line-height: 1.3; text-shadow: 0 2px 8px rgba(0,0,0,0.8); position: relative; z-index: 2; }
-        #premium-name { font-size: 1.1rem; border-bottom: 2px solid white; padding-bottom: 5px; text-transform: uppercase; position: relative; z-index: 2; font-style: italic; }
-        .card-footer { font-size: 0.7rem; opacity: 0.8; position: relative; z-index: 2; }
-
-        /* --- CONTROLES DE EDICIÓN --- */
-        .modal-controls { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-        
-        input#modal-name-input {
-            padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.1); color: white;
-            font-size: 1rem; text-align: center;
-        }
-        input#modal-name-input:focus { outline: none; border-color: #F37335; background: rgba(255,255,255,0.15); }
-        
-        .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
-        .btn { padding: 12px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: background 0.2s; }
-        .btn-close { background: #333; color: white; }
-        .btn-share { background: #F37335; color: white; }
-        .btn:hover { opacity: 0.9; }
-
+        .btn-save:hover { background: #e0662d; }
     </style>
 </head>
 <body>
 
-    <h1>Tu Mazo Premium ✨</h1>
-    <p class="subtitle">He confirmado tu pago. Toca cualquier tarjeta para personalizarla y enviarla.</p>
+    <h1>¡Tu Mazo Premium está listo! ✨</h1>
+    <p class="subtitle">He confirmado tu pago. Haz clic en el botón de cada tarjeta para descargarla con su mensaje de poder.</p>
 
     <div class="gallery" id="premium-gallery">
         </div>
 
-    <div class="modal" id="edit-modal">
-        <div class="modal-content">
-            
-            <div id="premium-card-preview">
-                <div class="card-header">TU MENSAJE DE HOY:</div>
-                <div id="premium-phrase"></div> <div id="premium-name">PARA: ALGUIEN ESPECIAL</div>
-                <div class="card-footer">vibras positivas (3117700431)</div>
-            </div>
-
-            <div class="modal-controls">
-                <input type="text" id="modal-name-input" placeholder="Nombre de la persona..." maxlength="20">
-                <div class="modal-btns">
-                    <button class="btn btn-close" onclick="closeModal()">Cerrar</button>
-                    <button class="btn btn-share" onclick="generateAndShare()">Generar para Enviar</button>
-                </div>
-            </div>
-
-        </div>
+    <div style="margin-top: 50px; font-size: 0.8rem; opacity: 0.6;">
+        app desarrollada por vibras positivas (3117700431)
     </div>
 
     <script>
-        // --- CONFIGURACIÓN DE TU MAZO PREMIUM ---
-        
-        // 1. Frases Premium (Automáticas)
+        // --- BASE DE DATOS AUTOMÁTICA DE FRASES PREMIUM ---
         const premiumPhrases = [
-            "Eres un imán para la abundancia.", "Confía, todo está fluyendo a tu favor.", "Tu energía crea tu realidad.",
-            "Hoy es un gran día para agradecer.", "Merezco todo lo bueno.", "Atraigo paz y prosperidad.",
-            "Mi luz brilla con fuerza.", "Soy creador de mi realidad.", "Vivo en gratitud infinita.",
+            "Soy un imán para la abundancia.", "Confía, todo está fluyendo a tu favor.", "Tu energía crea tu realidad.",
+            "Hoy elijo ser mi mejor versión.", "Eres luz.", "Atraigo paz y prosperidad.",
+            "Merezco todo lo bueno.", "Soy creador de mi realidad.", "Vivo en gratitud infinita.",
             "Cada día es una nueva oportunidad.", "Atraigo bendiciones.", "Soy fuerte, valiente y capaz.",
             "Mi futuro es brillante.", "Abraza tu poder interior.", "Eres suficiente.",
             "Atraigo amor y alegría.", "Mi paz es mi poder.", "Todo conspira a mi favor.",
@@ -139,87 +97,59 @@
             "Eres amor puro.", "Agradece y recibirás."
         ];
 
-        // 2. Imágenes de Fondo (Usando tus imágenes reales de image_7.png/image_9.png)
-        // He buscado fondos similares a tus imágenes reales (místicas, galaxias, playas, etc.)
-        const bgImages = [
-            'https://images.unsplash.com/photo-1506318264265-9900294c6373?w=400', // Galaxia (como image_0.png)
-            'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400', // Cielo estrellado (como image_7.png thumb)
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400', // Playa (como image_4.png)
-            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400'  // Montañas
-            // ... Puedes añadir más enlaces de tus propias fotos aquí
+        // --- BASE DE DATOS DE IMÁGENES MÍSTICAS DE FONDO (Permiten descarga) ---
+        const backgrounds = [
+            'https://images.unsplash.com/photo-1506318264265-9900294c6373?auto=format&fit=crop&w=400&q=80', // Galaxia mística (image_0.png)
+            'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80', // Cielo estrellado
+            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80', // Mar tranquilo
+            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80'  // Montañas místicas
         ];
 
-        // --- LÓGICA DE LA GALERÍA ---
         const gallery = document.getElementById('premium-gallery');
 
-        // Generar las miniaturas de forma automática
+        // --- LÓGICA: GENERAR LA GALERÍA INTERACTIVA ---
         for (let i = 0; i < premiumPhrases.length; i++) {
-            const thumb = document.createElement('div');
-            thumb.className = 'card-thumbnail';
-            thumb.id = `thumb-${i}`;
+            // Crear el contenedor de la tarjeta
+            const card = document.createElement('div');
+            card.className = 'card-item';
+            card.id = `card-premium-${i}`;
             
-            // Asignar imagen de fondo (rotando si hay menos imágenes que frases)
-            const bgUrl = bgImages[i % bgImages.length];
-            thumb.style.backgroundImage = `url('${bgUrl}')`;
+            // Asignar imagen de fondo aleatoria de la lista
+            const bgUrl = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+            card.style.backgroundImage = `url('${bgUrl}')`;
             
-            // Texto de la miniatura
-            thumb.innerHTML = `<div class="thumb-phrase">"${premiumPhrases[i]}"</div>`;
-            
-            // Evento de clic para abrir el modal
-            thumb.addEventListener('click', () => openModal(i, bgUrl));
-            
-            gallery.appendChild(thumb);
+            // Estructura interna de la tarjeta (image_0.png style)
+            card.innerHTML = `
+                <div class="overlay"></div>
+                <div class="card-text">"${premiumPhrases[i]}"</div>
+                <div class="watermark">vibras positivas (3117700431)</div>
+                <button class="btn-save" onclick="downloadSingleCard('card-premium-${i}')">📥 Descargar con Mensaje</button>
+            `;
+            gallery.appendChild(card);
         }
 
-        // --- LÓGICA DEL MODAL DE EDICIÓN ---
-        const modal = document.getElementById('edit-modal');
-        const cardPreview = document.getElementById('premium-card-preview');
-        const phraseDisplay = document.getElementById('premium-phrase');
-        const nameDisplay = document.getElementById('premium-name');
-        const nameInput = document.getElementById('modal-name-input');
+        // --- LÓGICA: GENERAR IMAGEN Y DESCARGAR ---
+        function downloadSingleCard(cardId) {
+            const cardElement = document.getElementById(cardId);
+            const downloadBtn = cardElement.querySelector('.btn-save');
 
-        // Abrir Modal y cargar la tarjeta elegida
-        function openModal(index, bgUrl) {
-            phraseDisplay.innerText = `"${premiumPhrases[index]}"`;
-            cardPreview.style.backgroundImage = `url('${bgUrl}')`;
-            modal.classList.add('active');
-            nameInput.value = ''; // Limpiar input
-            nameDisplay.innerText = "PARA: ALGUIEN ESPECIAL";
-            nameInput.focus();
-        }
-
-        // Cerrar Modal
-        function closeModal() {
-            modal.classList.remove('active');
-        }
-
-        // Actualización del nombre en tiempo real (COMO EN LA APP PRINCIPAL)
-        nameInput.addEventListener('input', (e) => {
-            nameDisplay.innerText = e.target.value ? `PARA: ${e.target.value.toUpperCase()}` : "PARA: ALGUIEN ESPECIAL";
-        });
-
-        // --- LÓGICA DE GENERACIÓN Y COMPARTIR (AUTOMÁTICA) ---
-        function generateAndShare() {
-            // Feedback visual en el botón
-            const shareBtn = document.querySelector('.btn-share');
-            shareBtn.innerText = "Generando...";
-            shareBtn.style.opacity = 0.7;
-
-            // Generar la imagen (Canvas)
-            html2canvas(cardPreview, { scale: 3, useCORS: true }).then(canvas => {
+            // Feedback visual: Ocultar botón y mostrar "Cargando..."
+            downloadBtn.style.display = 'none'; 
+            
+            // html2canvas fusiona el texto con el fondo y genera la imagen
+            html2canvas(cardElement, { 
+                scale: 3, // ALTA RESOLUCIÓN para el cliente
+                useCORS: true, // Crucial para imágenes externas
+                backgroundColor: null 
+            }).then(canvas => {
+                // Crear enlace de descarga
                 const link = document.createElement('a');
-                // Nombre de archivo personalizado
-                const userName = nameInput.value || 'Mensaje';
-                link.download = `VibraPositivaPremium-${userName}.png`;
-                link.href = canvas.toDataURL();
+                link.download = `VibraPremium-${cardId}.png`;
+                link.href = canvas.toDataURL("image/png");
                 link.click();
                 
-                // Restaurar botón
-                shareBtn.innerText = "Generar para Enviar";
-                shareBtn.style.opacity = 1;
-                
-                // Cerrar modal tras descargar
-                setTimeout(closeModal, 500);
+                // Restaurar el botón original
+                downloadBtn.style.display = 'block';
             });
         }
     </script>
