@@ -3,273 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibras Positivas - Tu Guía Diaria ✨</title>
+    <title>Vibras Positivas ✨</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #000;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0; padding: 20px;
-            min-height: 100vh;
-        }
-
-        /* --- ESTILO DE LA TARJETA (Fiel a tus imágenes) --- */
-        #card-capture {
-            width: 330px;
-            height: 480px;
-            border-radius: 25px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 30px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.5s ease;
-        }
-
-        /* Capa oscura sobre la imagen para que el texto se lea bien */
-        #card-capture::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); /* Ajusta este valor si quieres más o menos brillo */
-            z-index: 1;
-        }
-
+        body { font-family: 'Segoe UI', sans-serif; background: #000; color: white; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; min-height: 100vh; }
+        #card-capture { width: 330px; height: 480px; border-radius: 25px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 40px 30px; text-align: center; color: white; box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; overflow: hidden; background-size: cover; background-position: center; transition: background-image 0.5s ease; }
+        #card-capture::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 1; }
         .content { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-
-        .card-label { font-size: 0.9rem; font-weight: bold; letter-spacing: 1px; opacity: 0.9; }
-        
-        #main-phrase { 
-            font-size: 1.8rem; 
-            font-weight: 800; 
-            line-height: 1.3; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        #user-display-name {
-            font-size: 1.1rem;
-            font-style: italic;
-            border-bottom: 1px solid rgba(255,255,255,0.4);
-            padding-bottom: 5px;
-            width: 90%;
-            text-transform: uppercase;
-        }
-
-        .card-footer { font-size: 0.7rem; opacity: 0.8; }
-
-        /* --- CONTROLES MÓVILES --- */
+        #main-phrase { font-size: 1.8rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        #user-display-name { font-size: 1.1rem; font-style: italic; border-bottom: 1px solid rgba(255,255,255,0.4); text-transform: uppercase; }
         .controls { width: 330px; margin-top: 25px; display: flex; flex-direction: column; gap: 15px; }
-
-        input#user-name {
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
-            background: #222;
-            color: white;
-            font-size: 1rem;
-            text-align: center;
-        }
-
+        input { padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: #222; color: white; text-align: center; }
         .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        .btn {
-            padding: 15px;
-            border-radius: 50px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-refresh { background: #9D50BB; color: white; box-shadow: 0 4px 10px rgba(157, 80, 187, 0.3); }
-        .btn-download { background: #F37335; color: white; box-shadow: 0 4px 10px rgba(243, 115, 53, 0.3); }
-        .btn:active { transform: scale(0.95); }
-
-        /* --- SECCIÓN DE PAGO NEQUI --- */
-        .payment-box {
-            margin-top: 25px;
-            width: 330px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .nequi-tag {
-            background: #ff0055;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .buy-btn {
-            background: transparent;
-            border: 2px solid #F37335;
-            color: #F37335;
-            width: 100%;
-            padding: 12px;
-            border-radius: 50px;
-            font-weight: bold;
-            margin-top: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .buy-btn:hover {
-            background: #F37335;
-            color: white;
-        }
+        .btn { padding: 15px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; }
+        .btn-refresh { background: #9D50BB; color: white; }
+        .btn-download { background: #F37335; color: white; }
+        .payment-box { margin-top: 25px; width: 330px; background: rgba(255,255,255,0.05); border-radius: 20px; padding: 20px; text-align: center; }
     </style>
 </head>
 <body>
-
-    <h2 style="color:#F37335; margin-bottom: 20px;">Vibras Positivas ✨</h2>
-
+    <h2 style="color:#F37335;">Vibras Positivas ✨</h2>
     <div id="card-capture" style="background-image: url('https://images.unsplash.com/photo-1506318264265-9900294c6373?auto=format&fit=crop&w=400&q=80');">
         <div class="content">
-            <div class="card-label">TU MENSAJE DE HOY:</div>
+            <div style="font-weight: bold;">TU MENSAJE DE HOY:</div>
             <div id="main-phrase">"Confía en el proceso, lo que buscas te está buscando."</div>
             <div id="user-display-name">PARA: ALGUIEN ESPECIAL</div>
-            <div class="card-footer">app desarrollada por vibras positivas (3117700431)</div>
+            <div style="font-size: 0.7rem;">vibras positivas (3117700431)</div>
         </div>
     </div>
-
     <div class="controls">
-        <input type="text" id="user-name" placeholder="Tu nombre aquí..." maxlength="20">
-        
+        <input type="text" id="user-name" placeholder="Tu nombre aquí...">
         <div class="btn-group">
-            <button class="btn btn-refresh" onclick="newPhraseAndBackground()">🔄 Nueva</button>
+            <button class="btn btn-refresh" onclick="newVibe()">🔄 Nueva</button>
             <button class="btn btn-download" onclick="downloadCard()">📥 Bajar PNG</button>
         </div>
     </div>
-
     <div class="payment-box">
-        <span class="nequi-tag">NEQUI</span>
-        <p style="margin: 10px 0 5px 0; font-weight: bold;">Mazo de 50 Tarjetas Premium</p>
-        <p style="font-size: 0.9rem; opacity: 0.8;">Valor: $5 USD / Envía a: 3117700431</p>
-        <button class="buy-btn" onclick="buyWhatsApp()">Comprar Colección Completa 🛍️</button>
+        <p><b>Mazo de 26 Tarjetas Paisajes</b><br>Valor: $3 USD / Nequi: 3117700431</p>
+        <button style="background:#F37335; color:white; border:none; padding:12px; border-radius:50px; font-weight:bold; cursor:pointer; width:100%;" onclick="window.open('https://wa.me/3117700431?text=Hola!%20Ya%20pagué%20los%203%20dólares%20por%20las%2026%20tarjetas')">Comprar Mazo 🛍️</button>
     </div>
-
     <script>
-        // --- BASE DE DATOS DE IMÁGENES MÍSTICAS DE FONDO (Permiten descarga) ---
-        const backgrounds = [
-            'https://images.unsplash.com/photo-1506318264265-9900294c6373?auto=format&fit=crop&w=400&q=80', // Galaxia mística
-            'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=400&q=80', // Cielo estrellado
-            'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80', // Montañas místicas
-            'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80'  // Mar tranquilo
-        ];
-
-        // --- BASE DE DATOS DE FRASES (Sigue siendo expandible) ---
-        const phrases = [
-            "Confía en el proceso, lo que buscas te está buscando.",
-            "Tu energía crea tu realidad. Elige vibrar alto hoy.",
-            "Eres el imán de tus propias bendiciones. Visualízalo.",
-            "Todo lo que necesitas ya está dentro de ti. Solo cree.",
-            "Hoy es un buen día para empezar de nuevo con gratitud.",
-            "Tu única competencia eres tú mismo de ayer. Supérate.",
-            "El universo conspira a tu favor. Mantén la fe.",
-            "Abraza la incertidumbre, ahí es donde vive la magia.",
-            "No dejes para mañana el amor propio que puedes darte hoy.",
-            "Eres luz. No permitas que nadie apague tu brillo."
-        ];
-
-        // --- LÓGICA DE NOMBRE ---
+        const bgs = ['https://images.unsplash.com/photo-1506318264265-9900294c6373?w=400','https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400','https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400'];
+        const phrases = ["Confía en el proceso.", "Tu energía crea tu realidad.", "Eres luz.", "El universo conspira a tu favor."];
         const nameInput = document.getElementById('user-name');
-        const display = document.getElementById('user-display-name');
-        
-        nameInput.addEventListener('input', (e) => {
-            // Ponemos el nombre en mayúsculas como en el diseño original
-            display.innerText = e.target.value ? `PARA: ${e.target.value.toUpperCase()}` : "PARA: ALGUIEN ESPECIAL";
-        });
-
-        // --- LÓGICA DE CAMBIO DE FRASE Y FONDO ---
-        let currentPhraseIndex = 0;
-        let currentBackgroundIndex = 0;
-
-        function newPhraseAndBackground() {
-            const card = document.getElementById('card-capture');
-            const phraseElement = document.getElementById('main-phrase');
-            
-            // 1. Elegir nueva frase (aleatoria pero no la misma)
-            let newPhraseIndex;
-            do {
-                newPhraseIndex = Math.floor(Math.random() * phrases.length);
-            } while (newPhraseIndex === currentPhraseIndex);
-            currentPhraseIndex = newPhraseIndex;
-
-            // 2. Elegir nuevo fondo (secuencial para variar)
-            currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
-            const newBackgroundUrl = backgrounds[currentBackgroundIndex];
-
-            // 3. Aplicar cambios con animación suave
-            // Pequeña animación de escala para la tarjeta
-            card.style.transform = "scale(0.98)";
-            
-            // Animación de opacidad para el texto
-            phraseElement.style.opacity = 0;
-
-            setTimeout(() => {
-                // Cambiar el texto
-                phraseElement.innerText = `"${phrases[currentPhraseIndex]}"`;
-                
-                // Cambiar el fondo
-                card.style.backgroundImage = `url('${newBackgroundUrl}')`;
-                
-                // Restaurar opacidad y escala
-                phraseElement.style.opacity = 1;
-                card.style.transform = "scale(1)";
-            }, 300); // Pequeño retraso para la animación
+        nameInput.addEventListener('input', (e) => { document.getElementById('user-display-name').innerText = "PARA: " + e.target.value.toUpperCase(); });
+        function newVibe() {
+            document.getElementById('card-capture').style.backgroundImage = `url('${bgs[Math.floor(Math.random()*bgs.length)]}')`;
+            document.getElementById('main-phrase').innerText = `"${phrases[Math.floor(Math.random()*phrases.length)]}"`;
         }
-
-        // --- LÓGICA DE DESCARGA PNG ---
         function downloadCard() {
-            const card = document.getElementById('card-capture');
-            
-            // Feedback visual en el botón de descarga
-            const downloadBtn = document.querySelector('.btn-download');
-            downloadBtn.innerHTML = "<span>⏳</span> Generando...";
-            downloadBtn.style.opacity = 0.7;
-
-            html2canvas(card, { 
-                scale: 3, // ALTA RESOLUCIÓN
-                useCORS: true, // Crucial para que las imágenes salgan en la descarga
-                backgroundColor: null // Mantiene el fondo de la página limpio
-            }).then(canvas => {
+            html2canvas(document.getElementById('card-capture'), { scale: 3, useCORS: true }).then(canvas => {
                 const link = document.createElement('a');
-                // Nombre del archivo personalizado
-                const userName = nameInput.value || 'Mensaje';
-                link.download = `VibraPositiva-${userName}.png`;
-                link.href = canvas.toDataURL("image/png");
+                link.download = "VibraPositiva.png";
+                link.href = canvas.toDataURL();
                 link.click();
-                
-                // Restaurar el botón
-                downloadBtn.innerHTML = "<span>📥</span> Bajar PNG";
-                downloadBtn.style.opacity = 1;
             });
-        }
-
-        // --- COMPRA POR WHATSAPP ---
-        function buyWhatsApp() {
-            // El mensaje está pre-escrito para que el cliente solo tenga que dar 'Enviar'
-            const url = "https://wa.me/3117700431?text=Hola!%20Acabo%20de%20enviar%20el%20pago%20a%20Nequi%20por%20los%205%20dolares.%20Quiero%20mi%20mazo%20de%2050%20tarjetas%20Premium.";
-            window.open(url, '_blank');
         }
     </script>
 </body>
